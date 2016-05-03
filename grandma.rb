@@ -18,7 +18,7 @@ def deaf_grandma
             puts "NO, NOT SINCE #{rand(1930..1980)}!"
             bye_count = 0 
 
-        else  you_say != you_say.upcase
+        else # you_say != you_say.upcase
             puts "HUH?!, SPEAK UP SONNY!"
             bye_count = 0 
 
