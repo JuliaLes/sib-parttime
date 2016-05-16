@@ -1,6 +1,12 @@
 
 # Blackjack program as of 5/15/2016- in progress. Much work needed. 
 
+
+class Deck
+    puts "\nA shuffled deck of cards is ready to use.\n"
+    $deck = (((1..9).to_a*4).concat [10]*16).shuffle!
+end
+
     
 class Player
 
@@ -15,16 +21,25 @@ class Player
         @wager = gets.chomp.to_i
         
         @hand = []
-        puts "\nThe player #{@name} is ready to begin.\n"
-        
+        puts "\nThe player #{@name} is ready to begin.\n"  
     end
 
-    
+    def name
+        @name
+    end
+
+    def bankroll
+        @bankroll
+    end
+
+    def wager
+        @wager
+    end
+
     def draws_card
         @hand << $deck.pop
-        puts "\nA card has been drawn\n"
+        puts "(a card is drawn)"
     end
-    
     
     def hand_sum
         @hand.inject(:+)
@@ -57,18 +72,14 @@ end
 class Blackjack    
 
 
-    puts "\nWelcome to Blackjack. Let's get started!\n"
-        
-
-    class Deck
-        puts "\nA shuffled deck of cards is ready to use.\n"
-        $deck = (((1..9).to_a*4).concat [10]*16).shuffle!
-    end
+    puts "\nWelcome to Blackjack. Let's get started!\n"    
 
     deck = Deck.new
 
     dealer = Dealer.new
     player = Player.new
+
+
     
     dealer.draws_card
     dealer.draws_card
@@ -85,7 +96,7 @@ class Blackjack
     #The player is making decisions
     
     while player.hand_sum < 21
-        puts "\nPlayer- would you like to hit or stay?\n"
+        puts "\n#{player.name}, would you like to hit or stay?\n"
         player_choice = gets.chomp.downcase
         if player_choice == "hit"
             player.draws_card
@@ -112,6 +123,7 @@ class Blackjack
     # The dealer is making decisions    
     
     while dealer.hand_sum < 21
+        dealer.display_full_hand
         if dealer.hand_sum < 17
             puts "\n#{dealer.name} has decided to hit.\n"
             dealer.draws_card
