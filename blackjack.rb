@@ -5,33 +5,33 @@
 class Player
 
     def initialize
-        puts "What is the player's name? "
+        puts "\nWhat is the player's name?\n"
         @name = gets.chomp
         
-        puts "What is #{@name}'s bank roll value? "
+        puts "\nWhat is #{@name}'s bank roll value?\n"
         @bankroll = gets.chomp.to_i
         
-        puts "How much is #{@name} wagering for this game?"
+        puts "\nHow much is #{@name} wagering for this game?\n"
         @wager = gets.chomp.to_i
         
         @hand = []
-        puts "The player #{@name} is ready to begin."
+        puts "\nThe player #{@name} is ready to begin.\n"
         
     end
 
     
     def draws_card
-        @hand << [$deck.pop]
-        puts "A card has been drawn"
+        @hand << $deck.pop
+        puts "\nA card has been drawn\n"
     end
     
     
     def hand_sum
-        sum = @hand.inject(:+).to_i
+        @hand.inject(:+)
     end
     
     def display_full_hand
-        puts "#{@name}'s hand is' "+ @hand.join(', ')
+        puts "\n#{@name}'s hand is "+ @hand.join(',')
     end
              
 end
@@ -41,14 +41,14 @@ class Dealer < Player
 
 
     def initialize
-        puts "What is the dealer's name?"
+        puts "\nWhat is the dealer's name?\n"
         @name = gets.chomp
         @hand = []
-        puts "The dealer #{@name} is ready to begin."
+        puts "\nThe dealer #{@name} is ready to begin.\n"
     end
       
     def display_part_hand
-        puts "The dealer #{@name} is holding a card with the value #{@hand[0].to_s}. The other card is concealed."
+        puts "\nThe dealer #{@name} is holding a card with the value #{@hand[0]}. The other card is concealed.\n"
     end  
 
 end
@@ -99,25 +99,25 @@ class Blackjack
     end
     
     if player.hand_sum > 21
-        puts "\nBUST! The dealer wins!\n"
+        puts "\nBUST! #{dealer.name} wins!\n"
         exit
     elsif player.hand_sum == 21
-        puts "\nBLACKJACK! The player wins!\n"
+        puts "\nBLACKJACK! #{player.name} wins!\n"
         exit
     else 
-        puts "\nNow it is the dealer's turn.\n"
+        puts "\nNow it is the #{dealer.name}'s turn.\n"
     end
         
     
     # The dealer is making decisions    
     
     while dealer.hand_sum < 21
-        if dealer_hand_sum < 17
-            puts "\nThe dealer has decided to hit.\n"
+        if dealer.hand_sum < 17
+            puts "\n#{dealer.name} has decided to hit.\n"
             dealer.draws_card
             dealer.display_full_hand
-        elsif dealer_hand_sum >= 17
-            puts "\nThe dealer has decided to stay.\n"
+        elsif dealer.hand_sum >= 17
+            puts "\n#{dealer.name} has decided to stay.\n"
             dealer.display_full_hand 
             break
         else 
@@ -127,10 +127,10 @@ class Blackjack
         
         
     if dealer.hand_sum > 21
-        puts "\nBUST! The player wins!\n"
+        puts "\nBUST! #{player.name} wins!\n"
         exit
-    elsif player.hand_sum == 21
-        puts "\nBLACKJACK! The dealer wins!\n"
+    elsif dealer.hand_sum == 21
+        puts "\nBLACKJACK! #{dealer.name} wins!\n"
         exit
     end
     
@@ -141,10 +141,10 @@ class Blackjack
         puts "\nIt's a tie!\n"
         exit
     elsif dealer.hand_sum > player.hand_sum
-        puts "\nThe dealer wins!\n"
+        puts "\n#{dealer.name} wins!\n"
         exit
     else
-        puts "\nThe player wins!\n"
+        puts "\n#{player.name} wins!\n"
         exit
     end
 end
