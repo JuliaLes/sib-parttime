@@ -3,8 +3,10 @@
 
 
 class Deck
-    puts "\nA shuffled deck of cards is ready to use.\n"
-    $deck = (((1..9).to_a*4).concat [10]*16).shuffle!
+    def initialize
+        puts "\nA shuffled deck of cards is ready for use.\n"
+        $deck = (((1..9).to_a*4).concat [10]*16).shuffle!
+    end
 end
 
     
@@ -16,9 +18,8 @@ class Player
         
         puts "\nWhat is #{@name}'s bank roll value?\n"
         @bankroll = gets.chomp.to_i
-        
-        puts "\nHow much is #{@name} wagering for this game?\n"
-        @wager = gets.chomp.to_i
+
+        @wager = 0
         
         @hand = []
         puts "\nThe player #{@name} is ready to begin.\n"  
@@ -77,76 +78,84 @@ end
 
 class Blackjack 
 
+    def initialize
  
-    puts "\nWelcome to Blackjack. Let's get started!\n"
+        puts "\nWelcome to Blackjack. Let's get started!\n"
 
-    dealer = Dealer.new
-    player = Player.new 
+        @dealer = Dealer.new
+        @player = Player.new 
+
+        deck = Deck.new
+
+        self.play_new_game
+
+    end
 
 
     # setting up mechanics of game
 
     def play_new_game
 
-        while player.bankroll > 0
+        while @player.bankroll > 0
 
-            puts "Let's start a game"
+            puts "\nLet's begin a new game!\n"
 
-            dealer.hand = []
-            player.hand = []
 
-            deck = Deck.new
+            puts "\nHow much is #{@player.name} wagering for this game?\n"
+            @wager = gets.chomp.to_i
+
+            @dealer.hand.clear
+            @player.hand.clear
             
-            dealer.draws_card
-            dealer.draws_card
-            player.draws_card
-            player.draws_card
+            @dealer.draws_card
+            @dealer.draws_card
+            @player.draws_card
+            @player.draws_card
             
             puts " "
-            dealer.display_part_hand
+            @dealer.display_part_hand
             puts " "
-            player.display_full_hand
+            @player.display_full_hand
             puts " "
             
             
             #The player is making decisions   
             
-            while player.hand_sum < 21
-                puts "\n#{player.name}, would you like to hit or stay?\n"
-                player_choice = gets.chomp.downcase
-                if player_choice == "hit"
-                    player.draws_card
-                    player.display_full_hand
-                elsif player_choice == "stay"
-                    player.display_full_hand 
+            while @player.hand_sum < 21
+                puts "\n#{@player.name}, would you like to hit or stay?\n"
+                @player_choice = gets.chomp.downcase
+                if @player_choice == "hit"
+                    @player.draws_card
+                    @player.display_full_hand
+                elsif @player_choice == "stay"
+                    @player.display_full_hand 
                     break
                 else 
                     puts 'Please type "hit" or "stay."'
                 end
             end
             
-            if player.hand_sum > 21
-                puts "\nBUST! #{dealer.name} wins!\n"
+            if @player.hand_sum > 21
+                puts "\nBUST! #{@dealer.name} wins!\n"
                 play_new_game
-            elsif player.hand_sum == 21
-                puts "\nBLACKJACK! #{player.name} wins!\n"
+            elsif @player.hand_sum == 21
+                puts "\nBLACKJACK! #{@player.name} wins!\n"
                 play_new_game
             else 
-                puts "\nNow it is the #{dealer.name}'s turn.\n"
+                puts "\nNow it is the #{@dealer.name}'s turn.\n"
             end
                 
             
             # The dealer is making decisions    
             
-            while dealer.hand_sum < 21
-                dealer.display_full_hand
-                if dealer.hand_sum < 17
-                    puts "\n#{dealer.name} has decided to hit.\n"
-                    dealer.draws_card
-                    dealer.display_full_hand
-                elsif dealer.hand_sum >= 17
-                    puts "\n#{dealer.name} has decided to stay.\n"
-                    dealer.display_full_hand 
+            while @dealer.hand_sum < 21
+                if @dealer.hand_sum < 17
+                    puts "\n#{@dealer.name} has decided to hit.\n"
+                    @dealer.draws_card
+                    @dealer.display_full_hand
+                elsif @dealer.hand_sum >= 17
+                    puts "\n#{@dealer.name} has decided to stay.\n"
+                    @dealer.display_full_hand 
                     break
                 else 
                     puts 'Please type "hit" or "stay."'
@@ -154,30 +163,31 @@ class Blackjack
             end
                 
                 
-            if dealer.hand_sum > 21
-                puts "\nBUST! #{player.name} wins!\n"
+            if @dealer.hand_sum > 21
+                puts "\nBUST! #{@player.name} wins!\n"
                 play_new_game
-            elsif dealer.hand_sum == 21
-                puts "\nBLACKJACK! #{dealer.name} wins!\n"
+            elsif @dealer.hand_sum == 21
+                puts "\nBLACKJACK! #{@dealer.name} wins!\n"
                 play_new_game
             end
             
             
             # Final comparison
             
-            if dealer.hand_sum == player.hand_sum
+            if @dealer.hand_sum == @player.hand_sum
                 puts "\nIt's a tie!\n"
                 play_new_game
-            elsif dealer.hand_sum > player.hand_sum
-                puts "\n#{dealer.name} wins!\n"
+            elsif @dealer.hand_sum > @player.hand_sum
+                puts "\n#{@dealer.name} wins!\n"
                 play_new_game
             else
-                puts "\n#{player.name} wins!\n"
+                puts "\n#{@player.name} wins!\n"
                 play_new_game
             end
         end
     end
-    blackjack = Blackjack.new
-    blackjack.play_new_game
 end
+
+blackjack = Blackjack.new
+
 

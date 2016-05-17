@@ -3,8 +3,10 @@
 
 
 class Deck
-    puts "\nA shuffled deck of cards is ready to use.\n"
-    $deck = (((1..9).to_a*4).concat [10]*16).shuffle!
+    def initialize
+        puts "\nA shuffled deck of cards is ready for use.\n"
+        $deck = (((1..9).to_a*4).concat [10]*16).shuffle!
+    end
 end
 
     
@@ -70,7 +72,6 @@ end
 
 
 class Blackjack    
-
 
     puts "\nWelcome to Blackjack. Let's get started!\n"    
 
