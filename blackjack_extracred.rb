@@ -4,7 +4,6 @@
 
 class Deck
     def initialize
-        puts "\nA shuffled deck of cards is ready for use.\n"
         $deck = (((1..9).to_a*4).concat [10]*16).shuffle!
     end
 end
@@ -18,8 +17,6 @@ class Player
         
         puts "\nWhat is #{@name}'s bank roll value?\n"
         @bankroll = gets.chomp.to_i
-
-        @wager = 0
         
         @hand = [] 
     end
@@ -32,17 +29,12 @@ class Player
         @bankroll
     end
 
-    def wager
-        @wager
-    end
-
     def hand
         @hand
     end
 
     def draws_card
         @hand << $deck.pop
-        puts "(a card is drawn)"
     end
     
     def hand_sum
@@ -52,6 +44,25 @@ class Player
     def display_full_hand
         puts "\n#{@name}'s hand is "+ @hand.join(',')
     end
+
+    def adjust_bankroll(w)
+        @bankroll += w
+    end
+    
+    def give_options
+        puts "\n#{@name} has #{@bankroll}$ in the bank roll.\n"
+        puts "Would #{@name} like to cash out or keep playing?\n"
+        reply = gets.chomp.downcase
+            if reply == 'cash out'
+                puts "Goodbye!"
+                exit
+            elsif reply == 'keep playing'
+                puts "\nGreat!\n"
+            else 
+                puts "Please type 'cash out' or 'keep playing'."
+                give_options
+            end
+    end   
              
 end
 
@@ -66,7 +77,7 @@ class Dealer < Player
     end
       
     def display_part_hand
-        puts "\nThe dealer #{@name} is holding a card with the value #{@hand[0]}. The other card is concealed.\n"
+        puts "\nThe dealer #{@name} is holding a card with the value #{@hand[0]}.\nThe other card is concealed.\n"
     end  
 
 end
@@ -93,7 +104,7 @@ class Blackjack
     def play_new_game
 
         if @player.bankroll <= 0
-            puts "Sorry- It looks like there is no money in your bank roll! Goodbye!"
+            puts "\nSorry, #{@player.name}, it looks like there is no money in your bank roll! Goodbye!\n"
             exit
         end
 
@@ -101,16 +112,17 @@ class Blackjack
 
             deck = Deck.new
 
-            puts "\nLet's begin a new game!\n"
+            puts "\nLet's begin a new hand.\n"
 
             @dealer.hand.clear
             @player.hand.clear
 
-            puts "\nHow much is #{@player.name} wagering for this game?\n"
+            puts "\nHow much is #{@player.name} wagering for this game?\n" 
             @wager = gets.chomp.to_i
 
-            until @wager < @player.bankroll
-                puts "It looks like you don't have enough money in your bank roll for that wager.\nPlease enter a more reasonable value."
+
+            until @wager <= @player.bankroll
+                puts "It looks like #{@player.name} doesn't have enough money in the\nbank roll for that wager. Please enter a more\nreasonable value."
                 @wager = gets.chomp.to_i
             end
 
@@ -145,9 +157,13 @@ class Blackjack
             
             if @player.hand_sum > 21
                 puts "\nBUST! #{@dealer.name} wins!\n"
+                @player.adjust_bankroll(-@wager)
+                @player.give_options
                 play_new_game
             elsif @player.hand_sum == 21
                 puts "\nBLACKJACK! #{@player.name} wins!\n"
+                @player.adjust_bankroll(@wager)
+                @player.give_options
                 play_new_game
             else 
                 puts "\nNow it is #{@dealer.name}'s turn.\n"
@@ -173,9 +189,13 @@ class Blackjack
                 
             if @dealer.hand_sum > 21
                 puts "\nBUST! #{@player.name} wins!\n"
+                @player.adjust_bankroll(@wager)
+                @player.give_options
                 play_new_game
             elsif @dealer.hand_sum == 21
                 puts "\nBLACKJACK! #{@dealer.name} wins!\n"
+                @player.adjust_bankroll(-@wager)
+                @player.give_options
                 play_new_game
             end
             
@@ -184,12 +204,17 @@ class Blackjack
             
             if @dealer.hand_sum == @player.hand_sum
                 puts "\nIt's a tie!\n"
+                @player.give_options
                 play_new_game
             elsif @dealer.hand_sum > @player.hand_sum
                 puts "\n#{@dealer.name} wins!\n"
+                @player.adjust_bankroll(-@wager)
+                @player.give_options
                 play_new_game
             else
                 puts "\n#{@player.name} wins!\n"
+                @player.adjust_bankroll(@wager)
+                @player.give_options
                 play_new_game
             end
         end
