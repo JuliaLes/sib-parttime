@@ -1,5 +1,5 @@
 
-# Blackjack program as of 5/16/2016- in progress.  
+# Blackjack program with extra credit as of 5/17/2016- in progress.  
 
 
 class Deck
@@ -21,8 +21,7 @@ class Player
 
         @wager = 0
         
-        @hand = []
-        puts "\nThe player #{@name} is ready to begin.\n"  
+        @hand = [] 
     end
 
     def name
@@ -64,7 +63,6 @@ class Dealer < Player
         puts "\nWhat is the dealer's name?\n"
         @name = gets.chomp
         @hand = []
-        puts "\nThe dealer #{@name} is ready to begin.\n"
     end
       
     def display_part_hand
@@ -85,27 +83,37 @@ class Blackjack
         @dealer = Dealer.new
         @player = Player.new 
 
-        deck = Deck.new
-
         self.play_new_game
 
     end
 
 
-    # setting up mechanics of game
+    # Game mechanics for each new hand of blackjack
 
     def play_new_game
 
+        if @player.bankroll <= 0
+            puts "Sorry- It looks like there is no money in your bank roll! Goodbye!"
+            exit
+        end
+
         while @player.bankroll > 0
+
+            deck = Deck.new
 
             puts "\nLet's begin a new game!\n"
 
+            @dealer.hand.clear
+            @player.hand.clear
 
             puts "\nHow much is #{@player.name} wagering for this game?\n"
             @wager = gets.chomp.to_i
 
-            @dealer.hand.clear
-            @player.hand.clear
+            until @wager < @player.bankroll
+                puts "It looks like you don't have enough money in your bank roll for that wager.\nPlease enter a more reasonable value."
+                @wager = gets.chomp.to_i
+            end
+
             
             @dealer.draws_card
             @dealer.draws_card
@@ -142,7 +150,8 @@ class Blackjack
                 puts "\nBLACKJACK! #{@player.name} wins!\n"
                 play_new_game
             else 
-                puts "\nNow it is the #{@dealer.name}'s turn.\n"
+                puts "\nNow it is #{@dealer.name}'s turn.\n"
+                @dealer.display_full_hand
             end
                 
             
@@ -155,7 +164,6 @@ class Blackjack
                     @dealer.display_full_hand
                 elsif @dealer.hand_sum >= 17
                     puts "\n#{@dealer.name} has decided to stay.\n"
-                    @dealer.display_full_hand 
                     break
                 else 
                     puts 'Please type "hit" or "stay."'
@@ -185,6 +193,7 @@ class Blackjack
                 play_new_game
             end
         end
+
     end
 end
 
