@@ -1,6 +1,12 @@
-# for the numbers 1-100 print fiz for every multiple of 3. 
-# print bang for every multiple of 5 
-# print fizbang for every multiple of 3 and 5
+
+# Fizbang in-class Practice Challeng SI
+# Julia Les 4/26/16
+
+
+# Prompt: In less than five minues do the following:
+# For the numbers 1-100 print fiz for every multiple of 3. 
+# Print bang for every multiple of 5 
+# Print fizbang for every multiple of 3 and 5
 
 
 def fizbang

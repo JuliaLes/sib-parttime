@@ -1,2 +1,2 @@
 # sib-parttime
-Repository for lab work for SI Ruby part-time
+Repository for Lab Work for SI Ruby Part-time Course

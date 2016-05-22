@@ -1,12 +1,25 @@
-# In class + hw exercise Guess Who Game 5/17/2016
 
-# In terminal type game = Guesswho.new './suspects.csv'
+
+# In-Class + Homework Exercise Guess Who Game SI 
+# Julia Les 5/17/2016
+
+# Create a "Guess Who" game.
+# Your goal is to correctly identify the guilty suspect. 
+# You should have multiple classes. You have 3 chances. 
+# It should show a list of the suspects and the user is
+# prompted to choose an attribute of hair color, eye color, 
+# skin color, or gender. 
+# If guilty suspect doesn’t match the trait entered
+# then remove the suspects of that trait.
+
+# Utilizes information contained in suspects.csv
 
 require 'csv'
 
 
 class Suspect
 	attr_accessor :name, :gender, :skin_color, :hair_color, :eye_color
+
 	def initialize name, gender, skin_color, hair_color, eye_color
 		self.name = name
 		self.gender = gender
@@ -17,11 +30,7 @@ class Suspect
 end
 
 
-
-
-#may want to have this as a separate file that does require './Suspect.rb'
 class Guesswho
-
 	attr_accessor :players, :suspects, :villian
 
 	def initialize file
@@ -64,4 +73,3 @@ class Guesswho
 		end
 	end
 end
-	# finish for other attributes

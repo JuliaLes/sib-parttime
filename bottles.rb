@@ -1,12 +1,18 @@
-# Write a program that prints out the complete lyrics to “99 bottles of beer on the wall.”
+
+
+# Lyrics to "99 Bottles of Beer on the Wall" SI Homework
+# Julia Les 4/29/15
+
+# Prompt: Write a program that prints out the complete lyrics to 
+# “99 Bottles of Beer on the Wall.”
 
 def bottles_of_beer
 
-    puts "How many bottles of beer are on the wall?"
+    puts "\nHow many bottles of beer are on the wall?"
     num_of_bottles = gets.chomp.to_i
 
  	if num_of_bottles < 1 
- 		puts "Please enter a valid number of bottles."
+ 		puts "Please enter a valid interger number of bottles."
  		bottles_of_beer
 
  	end
@@ -19,6 +25,6 @@ def bottles_of_beer
     end
 	
     puts "1 bottle of beer on the wall, 1 bottle of beer... \nTake one down and pass it around, no more bottles of beer on the wall!"
-	puts "No more bottles of beer on the wall, no more bottles of beer... \nGo to the store and buy some more, 99 bottles of beer on the wall."
+	puts "No more bottles of beer on the wall, no more bottles of beer... \nGo to the store and buy some more, 99 bottles of beer on the wall!"
 
 end
