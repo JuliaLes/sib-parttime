@@ -1,4 +1,18 @@
-# League Point Calculator Si Homework
+
+
+# League Point Calculator SI Homework 
+# Julia Les 5/19/2016
+
+# Prompt: Build a League Point Calculator. The LPC should be able to
+# let the user input scores and output the league ranking based on points
+# from highest to lowest. If there is a tie then they should be ordered 
+# alphabetically. Each winning team gets 3 points and the osing team gets 
+# 0 points. If the game ends in a tie both teams get 1 point. The output should 
+# look something like this:
+# Yankees 9
+# Giants 4
+# Mets 4
+# Cardinals 0
 
 
 def league_point_calculator
@@ -7,11 +21,8 @@ def league_point_calculator
 
 	while true
 
-		# Ask for home team name
-
 		puts "\nWhat is the name of the home team?"
 		home_team_name = gets.chomp.capitalize
-
 
 
 		while true 
@@ -91,7 +102,6 @@ def league_point_calculator
 		puts "\nThe current league scores are as follows:"
 		sorted_league_hash.each { |team,score| puts "#{team} #{score}"}
 		
-
 
 
 		# Make decision to add data for additional games

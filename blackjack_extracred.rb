@@ -1,5 +1,20 @@
 
-# Blackjack program with extra credit as of 5/17/2016- in progress.  
+
+# Blackjack SI Homework with Extra Credit Features
+# Julia Les 5/14/2016
+  
+# Prompt: Create a program that allows a user to
+# play a game of Blackjack using command prompt.
+# Make BlackJack, Player, and Dealer classes.
+# You will need a deck of cards that only supports 1 
+# to 10, with 52 cards total. Face and Suits are not necessary.
+# Player should be asked to enter their name and have a bank roll. 
+# Allow the Player to wager an amount on the game. 
+# 
+# Extra credit: Keep the game going until the Player has no 
+# more money in his bankroll or if he says exit.
+
+
 
 
 class Deck
