@@ -24,7 +24,6 @@ def league_point_calculator
 		puts "\nWhat is the name of the home team?"
 		home_team_name = gets.chomp.capitalize
 
-
 		while true 
 			puts "\nWhat did #{home_team_name} score?"
 			home_team_score = gets.chomp
@@ -37,8 +36,6 @@ def league_point_calculator
 				puts "Please enter an interger score value."
 			end
 		end
-
-
 
 		puts "\nWhat is the name of the away team?"
 		away_team_name = gets.chomp.capitalize
@@ -59,7 +56,6 @@ def league_point_calculator
 		home_team_league_points = 0
 		away_team_league_points = 0
 
-
 		#Compare game scores to detemine earned league points for that game
 
 		if home_team_score > away_team_score
@@ -73,7 +69,6 @@ def league_point_calculator
 
 		puts "\nThe #{home_team_name} has #{home_team_league_points} league points from this game."
 		puts "The #{away_team_name} has #{away_team_league_points} league points from this game.\n"
-
 		
 		# Add data from game to league hash
 
@@ -89,20 +84,16 @@ def league_point_calculator
 			league_hash["#{away_team_name}"] = away_team_league_points
 		end
 
+		# Sorting the hash of league scores	
 
-
-		# Sorting the hash of league scores
-
-		sorted_league_hash = league_hash.sort do |team,score|
-			team.last == score.last ? team.first <=> score.first : score.last <=> team.last
+		sorted_league_hash = league_hash.sort do |a,b|
+			a.last == b.last ? a.first <=> b.first : b.last <=> a.last
 		end
 
 		# List the sorted league scores
 
 		puts "\nThe current league scores are as follows:"
 		sorted_league_hash.each { |team,score| puts "#{team} #{score}"}
-		
-
 
 		# Make decision to add data for additional games
 
@@ -119,10 +110,7 @@ def league_point_calculator
 				puts "please answer 'yes' or 'no'"
 			end
 		end
-
 	end
-
-
 end
 
 
