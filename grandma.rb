@@ -1,5 +1,4 @@
 
-
 # Deaf Grandma Program SI Homework 
 # Julia Les 5/03/16
 
@@ -14,10 +13,7 @@
 # you to go unless you shout BYE three times in a row. So if you say BYE 
 # twice and then something else you have to say BYE three times again.
 
-
-
 def deaf_grandma  
-    
     puts "What do you say to Grandma?"
     bye_count = 0
     
@@ -28,15 +24,12 @@ def deaf_grandma
         if you_say == "BYE"
             puts "NO, NOT SINCE #{rand(1930..1980)}!"
             bye_count += 1
-    
         elsif you_say == you_say.upcase
             puts "NO, NOT SINCE #{rand(1930..1980)}!"
             bye_count = 0 
-
         else 
             puts "HUH?!, SPEAK UP SONNY!"
             bye_count = 0 
-
         end
     end
 end
