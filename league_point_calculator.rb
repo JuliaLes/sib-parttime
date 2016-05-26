@@ -1,10 +1,9 @@
 
-
 # League Point Calculator SI Homework 
 # Julia Les 5/19/2016
 
 # Prompt: Build a League Point Calculator. The LPC should be able to
-# let the user input scores and output the league ranking based on points
+# let the user input teams and scores, and output the league ranking based on points
 # from highest to lowest. If there is a tie then they should be ordered 
 # alphabetically. Each winning team gets 3 points and the osing team gets 
 # 0 points. If the game ends in a tie both teams get 1 point. The output should 
@@ -13,6 +12,8 @@
 # Giants 4
 # Mets 4
 # Cardinals 0
+
+# To do: Break into smaller methods
 
 
 def league_point_calculator
