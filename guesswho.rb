@@ -14,7 +14,7 @@
 
 # Utilizes information contained in suspects.csv
 
-# To do: complete the program
+# TODO: complete the program
 
 require 'csv'
 
@@ -30,7 +30,7 @@ class Suspect
 	end
 end
 
-class Guesswho
+class GuessWho
 	attr_accessor :players, :suspects, :villain
 
 	def initialize(file)
@@ -49,16 +49,16 @@ class Guesswho
 			}
 			puts "That is not the villain's name"
 			name_guess_count += 1
+			self.end_turn
 		else
 			suspects.delete_if { |suspect| 
-				suspect.gander != gender 
+				suspect.name != name 
 			}
 			puts "You have correctly guessed the villain's name!"
-			puts "The villain is #{self.suspects}!"
+			puts "The villain is #{self.suspects}! You win! "
+			exit
 		end
 	end
-
-
 
 	def guess_gender(gender)
 		if villain.gender != gender
@@ -72,7 +72,7 @@ class Guesswho
 			}
 			puts "That is the villain's gender."
 		end
-		evaluate 
+		self.end_turn
 	end
 
 	def guess_skin_color(skin_color)
@@ -87,7 +87,7 @@ class Guesswho
 			}
 			puts "That is the villain's skin color."
 		end
-		evaluate
+		self.end_turn
 	end
 
 	def guess_hair_color(hair_color)
@@ -102,7 +102,7 @@ class Guesswho
 			}
 			puts "That is the villain's hair color."
 		end
-		evaluate
+		self.end_turn
 	end
 
 	def guess_eye_color(eye_color)
@@ -117,34 +117,52 @@ class Guesswho
 			}
 			puts "That is the villain's eye color."
 		end
-		evaluate
+		self.end_turn
 	end
 
-	def evaluate
-		puts "The remainig suspects are #{self.suspects}."
+	def end_turn
 		if self.suspects.count == 1
 			puts "Congrats, you have isolated the villain #{self.suspects}."
-		else 
+		elsif name_guess_count == 3 && self.suspects.count > 1
+			puts "You have made the maximum number of name guesses and"
+			puts "failed to isolate the villain. You lose!"
+			exit
+		else
+			puts "The remainig suspects are #{self.suspects}."
+		end
+	end
+
+	def start_turn
 			puts "Would you like to make another guess about the villain's features"
 			puts "such as gender, hair, skin, or eye color?"
 			puts "Or would you like to name the villain?"
 			puts "(Please type 'gender' 'hair' 'skin' 'eye' or 'name' to proceed.)"  
-			guess_type = gets.chomp
+			guess_type = gets.chomp.downcase!
 				if guess_type == "gender"
-					guess_gender
+					self.guess_gender
 				elsif guess_type == "hair"
-					guess_hair_color
+					self.guess_hair_color
 				elsif guess_type == "eye"
-					guess_eye_color
+					self.guess_eye_color
 				elsif guess_type == "skin"
-					guess_skin_color
+					self.guess_skin_color
 				elsif guess_type == "name"
-					guess_name
+					self.guess_name
 				else
 					puts "That is not a valid entry.\n"
-					evaluate
+					self.start_turn
 				end
 			end
 		end
+	end
+end
+
+def turn_sequence
+	player1_game = GuessWho.new
+	player2_game = GuessWho.new
+
+	loop do
+		player1_game.start_turn
+		player2_game.start_turn
 	end
 end
