@@ -37,132 +37,148 @@ class GuessWho
 		self.suspects = Array.new   
 		CSV.foreach(file) do |csv|
 			self.suspects << Suspect.new(csv[0], csv[1], csv[2], csv[3], csv[4])
-			self.villain = self.suspects.sample(1)
-			name_guess_count = 0
+			self.villain = self.suspects[rand(0..self.suspects.length)]
+			@name_guess_count = 0
 		end
 	end
 
-	def guess_name(name)
-		if villain.name != name
-			suspects.delete_if { |suspect|
+	def guess_name
+		puts "\nWhich name do you guess?\n"
+		name = gets.chomp.downcase
+		if self.villain.name != name
+			self.suspects.delete_if { |suspect|
 				suspect.name == name 
 			}
-			puts "That is not the villain's name"
-			name_guess_count += 1
+			puts "\nThat is not the villain's name.\n"
+			@name_guess_count += 1
 			self.end_turn
 		else
-			suspects.delete_if { |suspect| 
+			self.suspects.delete_if { |suspect| 
 				suspect.name != name 
 			}
-			puts "You have correctly guessed the villain's name!"
-			puts "The villain is #{self.suspects}! You win! "
+			puts "\nYou have correctly guessed the villain. You win!\n"
 			exit
 		end
 	end
 
-	def guess_gender(gender)
-		if villain.gender != gender
-			suspects.delete_if { |suspect| 
+	def guess_gender
+		puts "\nIs the suspect a boy or a girl?\n"
+		gender = gets.chomp.downcase
+		if self.villain.gender != gender
+			self.suspects.delete_if { |suspect| 
 				suspect.gender == gender
 			}
-			puts "That is not the villain's gender."
+			puts "\nThat is not the villain's gender.\n"
 		else 
-			suspects.delete_if { |suspect| 
+			self.suspects.delete_if { |suspect| 
 				suspect.gender != gender
 			}
-			puts "That is the villain's gender."
+			puts "\nThat is the villain's gender.\n"
 		end
 		self.end_turn
 	end
 
-	def guess_skin_color(skin_color)
-		if villian.skin_color != skin_color
-			suspects.delete_if { |suspect| 
+	def guess_skin_color
+		puts "\nWhich skin color do you guess?\n"
+		skin_color = gets.chomp.downcase
+		if self.villain.skin_color != skin_color
+			self.suspects.delete_if { |suspect| 
 				suspect.skin_color == skin_color
 			}
-			puts "That is not the villain's skin color."
+			puts "\nThat is not the villain's skin color.\n"
 		else
-			suspects.delete_if { |suspect| 
+			self.suspects.delete_if { |suspect| 
 				suspect.skin_color != skin_color
 			}
-			puts "That is the villain's skin color."
+			puts "\nThat is the villain's skin color.\n"
 		end
 		self.end_turn
 	end
 
-	def guess_hair_color(hair_color)
-		if villian.hair_color != hair_color
-			suspects.delete_if { |suspect| 
+	def guess_hair_color
+		puts "\nWhich hair color do you guess?\n"
+		hair_color = gets.chomp.downcase
+		if self.villain.hair_color != hair_color
+			self.suspects.delete_if { |suspect| 
 				suspect.hair_color == hair_color
 			}
-			puts "That is not the villain's hair color."
-		end
-			suspects.delete_if { |suspect| 
+			puts "\nThat is not the villain's hair color.\n"
+		else
+			self.suspects.delete_if { |suspect| 
 				suspect.hair_color != hair_color
 			}
-			puts "That is the villain's hair color."
+			puts "\nThat is the villain's hair color.\n"
 		end
 		self.end_turn
 	end
 
-	def guess_eye_color(eye_color)
-		if villain.eye_color != eye_color
-			suspects.delete_if { |suspect| 
+	def guess_eye_color
+		puts "\nWhich eye color do you guess?\n"
+		eye_color = gets.chomp.downcase
+		if self.villain.eye_color != eye_color
+			self.suspects.delete_if { |suspect| 
 				suspect.eye_color == eye_color
 			}
-			puts "That is not the villain's eye color."
+			puts "\nThat is not the villain's eye color.\n"
 		else
-			suspects.delete_if { |suspect| 
+			self.suspects.delete_if { |suspect| 
 				suspect.eye_color != eye_color
 			}
-			puts "That is the villain's eye color."
+			puts "\nThat is the villain's eye color.\n"
 		end
 		self.end_turn
 	end
 
 	def end_turn
-		if self.suspects.count == 1
-			puts "Congrats, you have isolated the villain #{self.suspects}."
-		elsif name_guess_count == 3 && self.suspects.count > 1
-			puts "You have made the maximum number of name guesses and"
-			puts "failed to isolate the villain. You lose!"
+		if @name_guess_count == 3 && self.suspects.count > 1
+			puts "\nYou have made the maximum number of name guesses and"
+			puts "failed to isolate the villain. You lose!\n"
 			exit
 		else
-			puts "The remainig suspects are #{self.suspects}."
+			puts " #{self.suspects.count} suspects remain."
+			
 		end
 	end
 
 	def start_turn
-			puts "Would you like to make another guess about the villain's features"
-			puts "such as gender, hair, skin, or eye color?"
-			puts "Or would you like to name the villain?"
-			puts "(Please type 'gender' 'hair' 'skin' 'eye' or 'name' to proceed.)"  
-			guess_type = gets.chomp.downcase!
-				if guess_type == "gender"
-					self.guess_gender
-				elsif guess_type == "hair"
-					self.guess_hair_color
-				elsif guess_type == "eye"
-					self.guess_eye_color
-				elsif guess_type == "skin"
-					self.guess_skin_color
-				elsif guess_type == "name"
-					self.guess_name
-				else
-					puts "That is not a valid entry.\n"
-					self.start_turn
-				end
-			end
+		puts "\nThe remainig suspects are:\n"
+		self.suspects.each { |suspect| puts "name: #{suspect.name.ljust(8,' ')} gender: #{suspect.gender.ljust(5,' ')} hair: #{suspect.hair_color.ljust(7,' ')} eyes: #{suspect.eye_color.ljust(6,' ')} skin: #{suspect.skin_color.ljust(5,' ')}\n" }
+		
+		puts "\nWould you like to make a guess about the villain's features"
+		puts "such as gender, hair, skin, or eye color?"
+		puts "Or would you like to name the villain?"
+		puts "(Please type 'gender' 'hair' 'skin' 'eye' or 'name' to proceed.)"  
+		guess_type = gets.chomp.downcase
+
+		if guess_type == "gender"
+			self.guess_gender
+		elsif guess_type == "hair"
+			self.guess_hair_color
+		elsif guess_type == "eye"
+			self.guess_eye_color
+		elsif guess_type == "skin"
+			self.guess_skin_color
+		elsif guess_type == "name"
+			self.guess_name
+		else
+			puts "\nThat is not a valid entry.\n"
+			self.start_turn
 		end
-	end
+	end			
 end
 
 def turn_sequence
-	player1_game = GuessWho.new
-	player2_game = GuessWho.new
+
+	puts "\nWelcome to Guess Who!\n"
+	player1_game = GuessWho.new('./suspects.csv')
+	player2_game = GuessWho.new('./suspects.csv')
 
 	loop do
+		puts "\nNow it is Player 1's turn.\n"
 		player1_game.start_turn
+		puts "\nNow it is Player 2's turn.\n"
 		player2_game.start_turn
 	end
 end
+
+turn_sequence
