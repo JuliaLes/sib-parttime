@@ -1,20 +1,18 @@
 
-
 # In-Class + Homework Exercise Guess Who Game SI 
 # Julia Les 5/17/2016 (In-Progress)
 
 # Create a "Guess Who" game.
 # Your goal is to correctly identify the guilty suspect. 
-# You should have multiple classes. You have 3 chances. 
+# You should have multiple classes.  
 # It should show a list of the suspects and the user is
 # prompted to choose an attribute of hair color, eye color, 
-# skin color, or gender. 
-# If guilty suspect doesn’t match the trait entered
-# then remove the suspects of that trait.
+# skin color, or gender. If guilty suspect doesn’t match 
+# the trait entered then remove the suspects of that trait.
+# The number of name guesses cannot exceed 3 per player.
+# Should be playable by two players from the terminal.
 
 # Utilizes information contained in suspects.csv
-
-# TODO: complete the program
 
 require 'csv'
 
@@ -45,6 +43,7 @@ class GuessWho
 	def guess_name
 		puts "\nWhich name do you guess?\n"
 		name = gets.chomp.downcase
+
 		if self.villain.name != name
 			self.suspects.delete_if { |suspect|
 				suspect.name == name 
@@ -64,6 +63,7 @@ class GuessWho
 	def guess_gender
 		puts "\nIs the suspect a boy or a girl?\n"
 		gender = gets.chomp.downcase
+
 		if self.villain.gender != gender
 			self.suspects.delete_if { |suspect| 
 				suspect.gender == gender
@@ -81,6 +81,7 @@ class GuessWho
 	def guess_skin_color
 		puts "\nWhich skin color do you guess?\n"
 		skin_color = gets.chomp.downcase
+
 		if self.villain.skin_color != skin_color
 			self.suspects.delete_if { |suspect| 
 				suspect.skin_color == skin_color
@@ -98,6 +99,7 @@ class GuessWho
 	def guess_hair_color
 		puts "\nWhich hair color do you guess?\n"
 		hair_color = gets.chomp.downcase
+
 		if self.villain.hair_color != hair_color
 			self.suspects.delete_if { |suspect| 
 				suspect.hair_color == hair_color
@@ -115,6 +117,7 @@ class GuessWho
 	def guess_eye_color
 		puts "\nWhich eye color do you guess?\n"
 		eye_color = gets.chomp.downcase
+
 		if self.villain.eye_color != eye_color
 			self.suspects.delete_if { |suspect| 
 				suspect.eye_color == eye_color
@@ -168,7 +171,6 @@ class GuessWho
 end
 
 def turn_sequence
-
 	puts "\nWelcome to Guess Who!\n"
 	player1_game = GuessWho.new('./suspects.csv')
 	player2_game = GuessWho.new('./suspects.csv')
