@@ -1,84 +1,24 @@
 
-
-# Blackjack SI Homework with Extra Credit Features
-# Updated to include additional features
+# Blackjack Capstone Project
+# SI Ruby Parttime
 # Julia Les 6/7/2016
-  
-# Prompt: Create a program that allows a user to
-# play a game of Blackjack using command prompt.
-# Make BlackJack, Player, and Dealer classes.
-# You will need a deck of cards that only supports 1 
-# to 10, with 52 cards total. Face and Suits are not necessary.
-# Player should be asked to enter their name and have a bank roll. 
-# Allow the Player to wager an amount on the game. 
-# 
-# Extra credit: Keep the game going until the Player has no 
-# more money in his bankroll or if he says exit.
-
-
-# TODO: finish blackjack/natural feature, finish filling out deck
-# adjust earnings by 1.5 if blackjack, add features shuch as dbl down if time
-
-
-
 
 class Deck
 
     def initialize
-        $deck = Array.new
-
-        $deck << ["Ace of Hearts", 1]
-        $deck << ["King of Hearts", 10]
-        $deck << ["Queen of Hearts", 10]
-        $deck << ["Jack of Hearts", 10]
-        $deck << ["Ten of Hearts", 10]
-        $deck << ["Nine of Hearts", 9]
-        $deck << ["Eight of Hearts", 8]
-        $deck << ["Seven of Hearts", 7]
-        $deck << ["Six of Hearts", 6]
-        $deck << ["Five of Hearts", 5]
-        $deck << ["Four of Hearts", 4]
-        $deck << ["Three of Hearts", 3]
-        $deck << ["Two of Hearts", 6]
-        $deck << ["Ace of Spades", 1]
-        $deck << ["King of Spades", 10]
-        $deck << ["Queen of Spades", 10]
-        $deck << ["Jack of Spades", 10]
-        $deck << ["Ten of Spades", 10]
-        $deck << ["Nine of Spades", 9]
-        $deck << ["Eight of Spades", 8]
-        $deck << ["Seven of Spades", 7]
-        $deck << ["Six of Spades", 6]
-        $deck << ["Five of Spades", 5]
-        $deck << ["Four of Spades", 4]
-        $deck << ["Three of Spades", 3]
-        $deck << ["Two of Spades", 6]
-        $deck << ["Ace of Diamonds", 1]
-        $deck << ["King of Diamonds", 10]
-        $deck << ["Queen of Diamonds", 10]
-        $deck << ["Jack of Diamonds", 10]
-        $deck << ["Ten of Diamonds", 10]
-        $deck << ["Nine of Diamonds", 9]
-        $deck << ["Eight of Diamonds", 8]
-        $deck << ["Seven of Diamonds", 7]
-        $deck << ["Six of Diamonds", 6]
-        $deck << ["Five of Diamonds", 5]
-        $deck << ["Four of Diamonds", 4]
-        $deck << ["Three of Diamonds", 3]
-        $deck << ["Two of Diamonds", 6]
-        $deck << ["Ace of Clubs", 1]
-        $deck << ["King of Clubs", 10]
-        $deck << ["Queen of Clubs", 10]
-        $deck << ["Jack of Clubs", 10]
-        $deck << ["Ten of Clubs", 10]
-        $deck << ["Nine of Clubs", 9]
-        $deck << ["Eight of Clubs", 8]
-        $deck << ["Seven of Clubs", 7]
-        $deck << ["Six of Clubs", 6]
-        $deck << ["Five of Clubs", 5]
-        $deck << ["Four of Clubs", 4]
-        $deck << ["Three of Clubs", 3]
-        $deck << ["Two of Clubs", 6]
+        $deck = [["Ace of Hearts", 11],["King of Hearts", 10],["Queen of Hearts", 10],["Jack of Hearts", 10], \
+                 ["Ten of Hearts", 10],["Nine of Hearts", 9],["Eight of Hearts", 8],["Seven of Hearts", 7], \
+                 ["Six of Hearts", 6],["Five of Hearts", 5],["Four of Hearts", 4],["Three of Hearts", 3], \
+                 ["Two of Hearts", 6],["Ace of Spades", 11],["King of Spades", 10],["Queen of Spades", 10], \
+                 ["Jack of Spades", 10],["Ten of Spades", 10],["Nine of Spades", 9],["Eight of Spades", 8], \
+                 ["Seven of Spades", 7],["Six of Spades", 6],["Five of Spades", 5],["Four of Spades", 4], \
+                 ["Three of Spades", 3],["Two of Spades", 6],["Ace of Diamonds", 11],["King of Diamonds", 10], \
+                 ["Queen of Diamonds", 10],["Jack of Diamonds", 10],["Ten of Diamonds", 10],["Nine of Diamonds", 9], \
+                 ["Eight of Diamonds", 8],["Seven of Diamonds", 7],["Six of Diamonds", 6],["Five of Diamonds", 5], \
+                 ["Four of Diamonds", 4],["Three of Diamonds", 3],["Two of Diamonds", 6],["Ace of Clubs", 11], \
+                 ["King of Clubs", 10],["Queen of Clubs", 10],["Jack of Clubs", 10],["Ten of Clubs", 10], \
+                 ["Nine of Clubs", 9],["Eight of Clubs", 8],["Seven of Clubs", 7],["Six of Clubs", 6], \
+                 ["Five of Clubs", 5],["Four of Clubs", 4],["Three of Clubs", 3],["Two of Clubs", 6]]
 
         $deck.shuffle!
     end
@@ -100,18 +40,33 @@ class Player
     def draws_card
         @hand << $deck.pop
     end
-    
+
+    def has_ace?
+        if @hand.join(' ').include? "Ace"
+            return true
+        else
+            return false
+        end
+    end
+
     def hand_sum
+        ace_count = @hand.join(' ').scan(/Ace/).length
         sum = 0
+
         @hand.each do |card|
             sum += card[1]
+        end
+
+        while sum > 21 && ace_count > 0
+            sum -= 10
+            ace_count -= 1
         end
         sum
     end
 
     def has_natural?
         qualities = 0
-        if @hand.join(' ').include? "Ace"
+        if has_ace? == true
             qualities += 1
         end
         if @hand.join(' ').include? "10"
@@ -130,7 +85,8 @@ class Player
     end
     
     def display_full_hand
-        puts "\n#{@name}'s hand is :\n"+ show_card_names
+        puts "\n#{@name}'s hand is:\n"+ show_card_names
+        puts "(sum = #{self.hand_sum})\n"
     end
 
     def adjust_bankroll(wager)
@@ -138,7 +94,7 @@ class Player
     end
     
     def give_options
-        puts "\n#{@name} has #{@bankroll}$ in the bank roll.\n"
+        puts "\n#{@name} has #{@bankroll.to_i}$ in the bank roll.\n"
         puts "Would #{@name} like to cash out or keep playing?\n"
         reply = gets.chomp.downcase
         if reply == 'cash out'
