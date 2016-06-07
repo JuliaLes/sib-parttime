@@ -144,7 +144,7 @@ class GuessWho
 	end
 
 	def start_turn
-		puts "\nThe remainig suspects are:\n"
+		puts "\nThe remaining suspects are:\n"
 		self.suspects.each { |suspect| puts "name: #{suspect.name.ljust(8,' ')} gender: #{suspect.gender.ljust(5,' ')} hair: #{suspect.hair_color.ljust(7,' ')} eyes: #{suspect.eye_color.ljust(6,' ')} skin: #{suspect.skin_color.ljust(5,' ')}\n" }
 		
 		puts "\nWould you like to make a guess about the villain's features"
