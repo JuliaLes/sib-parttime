@@ -3,13 +3,17 @@
 # SI Ruby Parttime
 # Julia Les 6/7/2016
 
+# 7/20/16 TODO: Update Project to Utilize Best Practices
+
 class Deck
+
+    #TODO: Turn to Hash
 
     def initialize
         $deck = [["Ace of Hearts", 11],["King of Hearts", 10],["Queen of Hearts", 10],["Jack of Hearts", 10], \
                  ["Ten of Hearts", 10],["Nine of Hearts", 9],["Eight of Hearts", 8],["Seven of Hearts", 7], \
                  ["Six of Hearts", 6],["Five of Hearts", 5],["Four of Hearts", 4],["Three of Hearts", 3], \
-                 ["Two of Hearts", 6],["Ace of Spades", 11],["King of Spades", 10],["Queen of Spades", 10], \
+                 ["Two of Hearts", 2],["Ace of Spades", 11],["King of Spades", 10],["Queen of Spades", 10], \
                  ["Jack of Spades", 10],["Ten of Spades", 10],["Nine of Spades", 9],["Eight of Spades", 8], \
                  ["Seven of Spades", 7],["Six of Spades", 6],["Five of Spades", 5],["Four of Spades", 4], \
                  ["Three of Spades", 3],["Two of Spades", 6],["Ace of Diamonds", 11],["King of Diamonds", 10], \
